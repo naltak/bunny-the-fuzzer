@@ -1,4 +1,5 @@
-#summary Project documentation
+#labels Featured
+d#summary Project documentation
 
 =Bunny the Fuzzer=
 
@@ -369,4 +370,3 @@ Known issues with the current code:
   * `varargs` are not supported, which limits the amount of data collected about some relatively rare internal functions (again, the overhead needed for handling this is considerable, and there seem to be no cases that would warrant it).
 
   * Every unique call path encountered (but *not* every unique parameter sequence) uses up several kilobytes of memory and is kept indefinitely in process address space. The record contains important calibration and effector data needed to properly handle revisits to that call path with new parameters, and cannot be simply deallocated. This is typically not a problem for short-run fuzzing, but when we enter the domain of billions of exec cycles, we might eventually hit the 2 GB limit. Storing older data on disk might be advisable.
-
