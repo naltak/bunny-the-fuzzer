@@ -1,5 +1,5 @@
-#summary Project documentation
 #labels Featured
+ #summary Project documentation
 
 =Bunny the Fuzzer=
 
@@ -40,12 +40,7 @@ Smart features aside, Bunny is a good "classic" fuzzing application, too - with 
 
 ==You mentioned prior work, eh?==
 
-Yes; several other folks toyed with the idea in the past, most notably
-Lanzi, Martignoni, Monga, and Paleari:
-
-  * http://homes.dico.unimi.it/~monga/lib/sess07/28300052.pdf
-
-Unfortunately, because of the constraints mentioned before, all the designs I know of remain in the domain of academic experiments or proof-of-concept tools.
+Yes; several other folks toyed with the idea in the past and released papers on this topic - most notably Godefroid, Levin, Molnar ([http://research.microsoft.com/users/pg/public_psfiles/SAGE-external-v1.pdf Automated Whitebox Fuzz Testing]) and Lanzi, Martignoni, Monga, Paleari ([http://homes.dico.unimi.it/~monga/lib/sess07/28300052.pdf A Smart Fuzzer for x86 Executables]). These designs are difficult to independently evaluate, as they remain non-public, and generally employ assembly-level instrumentation, which would appear to provide output of lower analytic quality.
 
 A related public work at Google is _Flayer_ by Will Drewry and Tavis Omandy - a Valgrind-based tool that can be used to reach potentially vulnerable code, then work your way up to figure out what inputs get you there: 
 
