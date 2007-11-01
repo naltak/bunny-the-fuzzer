@@ -361,7 +361,7 @@ Known issues with the current code:
 
   * Multiple threads and processes are supported, and input will be collected from all threads and properly separated - but the trace continues only as long as the initial process is running, and only the initial process will be surveyed for `SEGV` and similar fault conditions. There is no easy way to intercept child process signals on Linux without resorting to dirty `ptrace()` tricks or signal handler injection.
 
-  * The only platforms known to work fine are Linux, *BSD, and Cygwin on IA32 platforms. Support for 64-bit and other unix systems is not confirmed. There is no support for non-x86 architectures, although this requires very few tweaks to correct.
+  * The only platforms known to work fine are Linux, flavors of BSD, and Cygwin on IA32 platforms. Support for 64-bit and other unix systems is not confirmed. There is no support for non-x86 architectures, although this requires very few tweaks to correct.
 
   * The C parser and its hooks is not necessarily compatible with restricted dialects of C that do not implement C99 + GNU extensions. This is because the instrumentation code uses `__attribute__` features to gain unobtrusive access to library functions and suppress certain warnings. `bunny-gcc` will strip any flags that restrict the dialect of an input file, and this might have an adverse effect in some rare circumstances.
 
