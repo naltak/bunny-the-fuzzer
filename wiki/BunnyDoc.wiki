@@ -49,7 +49,7 @@ These designs are difficult to independently evaluate, as they remain non-public
 
 A related public work at Google is _Flayer_ by Will Drewry and Tavis Omandy - a Valgrind-based tool that can be used to reach potentially vulnerable code, then work your way up to figure out what inputs get you there: 
 
-  * http://googleonlinesecurity.blogspot.com/2007/09/information-flow-tracing-and-software.html
+  * [http://googleonlinesecurity.blogspot.com/2007/09/information-flow-tracing-and-software.html Information flow tracing and software testing]
 
 ==4. So how does it work, exactly?==
 
