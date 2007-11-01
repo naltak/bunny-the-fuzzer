@@ -84,14 +84,17 @@ Bunny the Fuzzer
 3. You mentioned prior work, eh?
 --------------------------------
 
-  Yes; several other folks toyed with the idea in the past, most notably 
-  Lanzi, Martignoni, Monga, and Paleari:
+  Yes; several other folks toyed with the idea and released research papers
+  in the past, most notably:
 
-    http://homes.dico.unimi.it/~monga/lib/sess07/28300052.pdf
+  * http://research.microsoft.com/users/pg/public_psfiles/SAGE-external-v1.pdf
+    (Automated Whitebox Fuzz Testing by Godefroid, Levin, Molnar)
+  * http://homes.dico.unimi.it/~monga/lib/sess07/28300052.pdf 
+    (A Smart Fuzzer for x86 Executables] by Lanzi, Martignoni, Monga, Paleari)
 
-  Unfortunately, because of the constraints mentioned before, all the designs
-  I know of remain in the domain of academic experiments or proof-of-concept
-  tools.
+  These designs are difficult to independently evaluate, as they remain 
+  non-public, and generally employ assembly-level instrumentation, which would 
+  appear to provide output of lower analytic quality.
 
   A related public work at Google is Flayer by Will Drewry and Tavis Omandy -
   a Valgrind-based tool that can be used to reach potentially vulnerable code,
@@ -473,6 +476,11 @@ Bunny the Fuzzer
   remarkably more effective once such a syntax is accidentally stumbled upon.
 
   Known issues with the current code:
+
+  - The only platforms known to work fine are Linux, *BSD, and Cygwin on IA32
+    platforms. Support for 64-bit and other unix platforms is not confirmed. 
+    There is no support for non-x86 architectures, although this requires very
+    few tweaks to correct.
 
   - Multiple threads and processes are supported, and input will be collected
     from all threads and properly separated - but the trace continues only
