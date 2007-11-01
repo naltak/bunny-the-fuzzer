@@ -45,7 +45,7 @@ Yes; several other folks toyed with the idea in the past and released papers on 
   * [http://research.microsoft.com/users/pg/public_psfiles/SAGE-external-v1.pdf Automated Whitebox Fuzz Testing] by Godefroid, Levin, Molnar
   * [http://homes.dico.unimi.it/~monga/lib/sess07/28300052.pdf A Smart Fuzzer for x86 Executables] by Lanzi, Martignoni, Monga, Paleari
 
-These designs are difficult to independently evaluate, as they remain non-public, and generally employ assembly-level instrumentation, which would appear to provide output of lower analytic quality.
+These designs are difficult to independently evaluate, as they remain non-public, but generally employ assembly-level instrumentation, which would appear to provide output of lower analytic quality.
 
 A related public work at Google is _Flayer_ by Will Drewry and Tavis Omandy - a Valgrind-based tool that can be used to reach potentially vulnerable code, then work your way up to figure out what inputs get you there: 
 
