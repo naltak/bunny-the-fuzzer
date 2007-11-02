@@ -677,7 +677,7 @@ static struct bunny_traceitem* run_program(void) {
     flow_savefile(infn);
   } else if (write_file)  flow_savefile(write_file);
     else if (!write_host) flow_command(FLOW_TCP_ACCEPT, write_port, 0, 0);
-    else flow_command(use_udp ? FLOW_UDP_SEND : FLOW_TCP_ACCEPT, write_host, write_port, 0);
+    else flow_command(use_udp ? FLOW_UDP_SEND : FLOW_TCP_CONNECT, write_host, write_port, 0);
   
   if (exec_pid < 0) launch_exec(infn);
     else kill(exec_pid,SIGUSR1);
