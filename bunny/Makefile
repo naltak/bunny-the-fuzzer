@@ -19,13 +19,11 @@
 #
 
 PROGNAME = bunny-gcc bunny-trace bunny-exec bunny-flow bunny-main
-CFLAGS	 = -Wall -O3 -funroll-loops -fno-strict-aliasing -ffast-math -march=pentium4 -Wno-pointer-sign
+CFLAGS	 = -Wall -O3 -funroll-loops -fno-strict-aliasing -ffast-math -Wno-pointer-sign
 EX_LIBS  = -lcrypto -lm
 
 # CFLAGS  = -Wall -g -ggdb -g3 -Wno-pointer-sign
 # CFLAGS += -DDEBUG_TRACE=1
-
-CFLAGS += -static
 
 all: $(PROGNAME)
 

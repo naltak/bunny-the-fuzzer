@@ -396,7 +396,7 @@ static void prepare_shm(void) {
   if (shmid < 0) pfatal("unable to get %d kB of shared memory", OUTPUT_BUF / 1024);  
   
   shmreg = shmat(shmid, 0, 0);
-  if (!shmreg || (int)shmreg == -1) pfatal("unable to attach shared memory");
+  if (!shmreg || (long)shmreg == -1) pfatal("unable to attach shared memory");
 
   sprintf(buf,"%u",shmid);
   setenv("BUNNY_SHMID",buf,1);
@@ -433,7 +433,7 @@ int main(int argc,char** argv) {
   gettimeofday(&x,0);
   st = x.tv_sec * 1000 + x.tv_usec / 1000;
 
-  strftime(buf,128,"%Y/%m/%d %H:%M:%S",localtime(&x.tv_sec));
+  strftime(buf,128,"%Y/%m/%d %H:%M:%S",localtime((time_t*)&x.tv_sec));
 
   outf("bunny-trace " VERSION " (" __DATE__ " " __TIME__ ") by <lcamtuf@google.com>\n"
        "+++ Trace of '%s' started at %s +++\n", argv[1], buf);

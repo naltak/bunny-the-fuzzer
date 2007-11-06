@@ -23,7 +23,7 @@
 #ifndef _HAVE_CONFIG_H
 #define _HAVE_CONFIG_H
 
-#define VERSION		"0.9-beta"
+#define VERSION		"0.91-beta"
 
 /* Size limit for various input/output tokens */
 #define MAXTOKEN	4096
@@ -53,6 +53,12 @@
    quota limits exceeded, etc. */
 
 #define EXTRA_SIGNALS   1
+
+/* Look up bunny-flow and bunny-exec utilities in current working directory.
+   This is somewhat less secure, but handy if you do not intend to install the
+   program in your $PATH. */
+
+#define USE_EXEC_CWD	1
 
 /* Per-byte fuzzing cycle limit before we complain about the process taking forever */
 #define BYTE_CLIMIT	10000

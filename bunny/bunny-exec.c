@@ -518,7 +518,7 @@ static void prepare_shm(void) {
   if (shmid < 0) pfatal("unable to get %d kB of shared memory", OUTPUT_BUF / 1024);
 
   shmreg = shmat(shmid, 0, 0);
-  if (!shmreg || (int)shmreg == -1) pfatal("unable to attach shared memory");
+  if (!shmreg || (long)shmreg == -1) pfatal("unable to attach shared memory");
 
   sprintf(buf,"%u",shmid);
   setenv("BUNNY_SHMID",buf,1);

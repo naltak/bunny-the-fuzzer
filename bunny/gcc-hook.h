@@ -87,7 +87,7 @@ static _u8* __attribute__((unused)) bunny_hook_code =
 /* __bunny_shm is an easy target for fenceposts in global buffers. We
    want to detect this and report a crash, rather than hanging or so.
    We mirror ~__bunny_shm here and quickly check it now and then. */
-"static volatile unsigned int __bunny_shm_bkup = 0xFFFFFFFF;\n\n"
+"static volatile unsigned int __bunny_shm_bkup = (unsigned int)-1;\n\n"
 
 /* Error indicator - do not re-attempt shm attach over and over again. */
 "static volatile char  __bunny_failed;\n"
@@ -110,7 +110,7 @@ static _u8* __attribute__((unused)) bunny_hook_code =
 "static void __bunny_append_message(unsigned int mtype, unsigned int pid, void* buffer,unsigned int dlen) {\n"
 "  signed int can_write;\n"
    /* Detect memory corruption, force SEGV if spotted. */
-"  if (__bunny_shm_bkup != ~(unsigned int)__bunny_shm) *(char*)0x0 = 0;\n"
+"  if (__bunny_shm_bkup != ~(unsigned long)__bunny_shm) *(char*)0x0 = 0;\n"
    /* No SHM block? Try to attach, perform other initialization. */
 "  if (!__bunny_shm) {\n"
 "    char* shmid;\n"
@@ -135,8 +135,8 @@ static _u8* __attribute__((unused)) bunny_hook_code =
 #endif /* __CYGWIN__ */
         ") {\n"
 "      __bunny_shm = (struct __bunny_shm_t*) __bunny_sys_shmat(__bunny_sys_atoi(shmid), 0, 0);\n"
-"      __bunny_shm_bkup = ~(unsigned int)__bunny_shm;\n"
-"      if ((int)__bunny_shm == -1) __bunny_shm = 0;\n"
+"      __bunny_shm_bkup = ~(unsigned long)__bunny_shm;\n"
+"      if ((long)__bunny_shm == -1) __bunny_shm = 0;\n"
 "    }\n" /* Otherwise fall through with __bunny_shm == 0 */
 "    if (!__bunny_shm) { __bunny_failed = 1; return; }\n"
 "  }\n"
@@ -164,10 +164,10 @@ static _u8* __attribute__((unused)) bunny_hook_code =
    /* Store message. */
 "  if (__bunny_shm->write_off + dlen > __bunny_shm->length) {\n"
 "    int copy1 = __bunny_shm->length - __bunny_shm->write_off, dlen2 = dlen - copy1;\n"
-"    __bunny_memcpy((void*) __bunny_shm->data + __bunny_shm->write_off, buffer, copy1);\n"
-"    buffer += copy1;\n"
-"    __bunny_memcpy((void*) __bunny_shm->data, buffer, dlen2);\n"
-"  } else __bunny_memcpy((void*) __bunny_shm->data + __bunny_shm->write_off, buffer, dlen);\n"
+"    __bunny_memcpy((char*) __bunny_shm->data + __bunny_shm->write_off, buffer, copy1);\n"
+"    buffer = ((char *) buffer) + copy1;\n"
+"    __bunny_memcpy((char*) __bunny_shm->data, buffer, dlen2);\n"
+"  } else __bunny_memcpy((char*) __bunny_shm->data + __bunny_shm->write_off, buffer, dlen);\n"
 "  __bunny_shm->write_off = (__bunny_shm->write_off + dlen) % __bunny_shm->length;\n"
   /* W00t - success! */
 "  __bunny_dec(&__bunny_shm->lock);\n"
