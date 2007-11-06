@@ -23,7 +23,7 @@
 #ifndef _HAVE_CONFIG_H
 #define _HAVE_CONFIG_H
 
-#define VERSION		"0.91-beta"
+#define VERSION		"0.92-beta"
 
 /* Size limit for various input/output tokens */
 #define MAXTOKEN	4096
