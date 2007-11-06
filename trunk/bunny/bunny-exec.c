@@ -274,8 +274,6 @@ static void finalize(void) {
   _u8 r[16];
   _u32 total_pcount = 0, total_fcount = 0;
   
-  shmctl(shmid, IPC_RMID, 0);
-
   msg.exit_status  = exitflags;
   msg.thread_count = proc_cnt;
 
