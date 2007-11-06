@@ -135,8 +135,8 @@ static _u8* __attribute__((unused)) bunny_hook_code =
 #endif /* __CYGWIN__ */
         ") {\n"
 "      __bunny_shm = (struct __bunny_shm_t*) __bunny_sys_shmat(__bunny_sys_atoi(shmid), 0, 0);\n"
-"      __bunny_shm_bkup = ~(unsigned long)__bunny_shm;\n"
 "      if ((long)__bunny_shm == -1) __bunny_shm = 0;\n"
+"      __bunny_shm_bkup = ~(unsigned long)__bunny_shm;\n"
 "    }\n" /* Otherwise fall through with __bunny_shm == 0 */
 "    if (!__bunny_shm) { __bunny_failed = 1; return; }\n"
 "  }\n"
