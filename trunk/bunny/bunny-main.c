@@ -201,7 +201,7 @@ static void handle_sig(int sig) {
 
 /* ... */
 static void usage(_u8* argv0) {
-  outf("%s  [ options ] -- ./traced_app [ ... ]\n\n"
+  outf("%s  [ options ] -- /path/to/traced_app [ ... ]\n\n"
 
        "Mandatory job parameters:\n"
        "  -i dir	- fuzzer input data directory\n"
@@ -453,9 +453,17 @@ static void start_flow(void) {
     if (dup2(toflow[0],0) < 0 || dup2(fromflow[1],1) < 0) pfatal("dup2() failed");
     close(toflow[0]); close(toflow[1]);
     close(fromflow[0]); close(fromflow[1]);
-    
-    execl("./bunny-flow","bunny-flow",inflow_dir,outflow_dir, NULL);
-    pfatal("cannot execute ./bunny-flow");
+
+#ifdef USE_EXEC_CWD
+    if (access("bunny-flow",X_OK))
+#endif /* USE_EXEC_CWD */
+      execlp("bunny-flow","bunny-flow",inflow_dir,outflow_dir, (char*) NULL);
+#ifdef USE_EXEC_CWD
+    else 
+      execl("./bunny-flow","bunny-flow",inflow_dir,outflow_dir, (char*) NULL);
+#endif /* USE_EXEC_CWD */
+
+    pfatal("cannot execute bunny-flow");
     
   }
   
@@ -623,8 +631,15 @@ static void launch_exec(_u8* infn) {
 
     setenv("BUNNY_KEEPALIVE","yes",1);
 
-    execv("./bunny-exec",(char**)program_args);
-    pfatal("cannot execute ./bunny-exec"); 
+#ifdef USE_EXEC_CWD
+    if (access("bunny-exec",X_OK))
+#endif /* USE_EXEC_CWD */
+      execvp("bunny-exec",(char**)program_args);
+#ifdef USE_EXEC_CWD
+      else execv("./bunny-exec",(char**)program_args);
+#endif /* USE_EXEC_CWD */
+
+    pfatal("cannot execute bunny-exec"); 
     
   }
   
@@ -676,8 +691,8 @@ static struct bunny_traceitem* run_program(void) {
     infn = N(out_dir,".fake-pipe");
     flow_savefile(infn);
   } else if (write_file)  flow_savefile(write_file);
-    else if (!write_host) flow_command(FLOW_TCP_ACCEPT, write_port, 0, 0);
-    else flow_command(use_udp ? FLOW_UDP_SEND : FLOW_TCP_CONNECT, write_host, write_port, 0);
+    else if (!write_host) flow_command(FLOW_TCP_ACCEPT, htons(write_port), 0, 0);
+    else flow_command(use_udp ? FLOW_UDP_SEND : FLOW_TCP_CONNECT, write_host, htons(write_port), 0);
   
   if (exec_pid < 0) launch_exec(infn);
     else kill(exec_pid,SIGUSR1);
