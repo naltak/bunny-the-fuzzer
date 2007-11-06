@@ -87,7 +87,7 @@ static _u8* __attribute__((unused)) bunny_hook_code =
 /* __bunny_shm is an easy target for fenceposts in global buffers. We
    want to detect this and report a crash, rather than hanging or so.
    We mirror ~__bunny_shm here and quickly check it now and then. */
-"static volatile unsigned int __bunny_shm_bkup = (unsigned int)-1;\n\n"
+"static volatile unsigned long __bunny_shm_bkup = (unsigned long)-1;\n\n"
 
 /* Error indicator - do not re-attempt shm attach over and over again. */
 "static volatile char  __bunny_failed;\n"
